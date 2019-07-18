@@ -13,13 +13,19 @@ class App extends Component {
     };
   }
 
+  toggleNote = () => {
+    this.setState({
+      showNote: ! this.state.showNote
+    });
+  }
+
 render() {
-  const { showNote } = this.state;
+  const { toggleNote, showNote } = this.state;
 
   return (
     <div className="App">
-    <Nav />
-    { showNote ? <Note /> : <List /> }
+    <Nav toggleNote={this.toggleNote} showNote={showNote} />
+    { showNote ? 'Cancel' : '+ Note' }
     </div>
   );
 }
