@@ -6,7 +6,6 @@ import Note from './components/Note';
 import axios from 'axios';
 import urlFor from './helpers/urlFor';
 
-
 class App extends Component {
   constructor() {
     super();
@@ -27,21 +26,21 @@ class App extends Component {
 
   getNotes = () => {
     axios.get(urlFor('notes'))
-    .then((res) => this.setState({ notes: res.data}) )
+    .then((res) => this.setState({ notes: res.data }) )
     .catch((err) => console.log(err.response.data) );
   }
 
   getNote = (id) => {
     axios.get(urlFor(`notes/${id}`))
-    .then((res) => this.setState({ note: res.data, showNote: true}) )
+    .then((res) => this.setState({ note: res.data, showNote: true }) )
     .catch((err) => console.log(err.response.data) );
   }
 
   performSubmissionRequest = (data, id) => {
     if (id) {
-      return axios.patch(urlFor('notes/${id}'), data);
+      return axios.patch(urlFor(`notes/${id}`), data);
     } else {
-    return axios.post(urlFor('notes'), data);
+      return axios.post(urlFor('notes'), data);
     }
   }
 
@@ -62,30 +61,34 @@ class App extends Component {
     this.setState({ newTag: true });
   }
 
-render() {
-  const { showNote, notes, note, newTag } = this.state;
+  closeTagForm = () => {
+    this.setState({ newTag: false });
+  }
 
-  return (
-    <div className="App">
-    <Nav toggleNote={this.toggleNote} showNote={showNote} />
-    { showNote ? 
-      <Note
-        note={note}
-        submitNote={this.submitNote}
-        showTagForm={this.showTagForm}
-      /> 
-      : 
-      <List
-       getNotes={this.getNotes}
-       notes={notes}
-       getNote={this.getNote}
-       deleteNote={this.deleteNote}
-       newTag={newTag}
-       />
-      }
-    </div>
-  );
-}
+  render() {
+    const { showNote, notes, note, newTag } = this.state;
+
+    return (
+      <div className="App">
+        <Nav toggleNote={this.toggleNote} showNote={showNote} />
+        {showNote ?
+          <Note
+            note={note}
+            submitNote={this.submitNote}
+            showTagForm={this.showTagForm}
+            closeTagForm={this.closeTagForm}
+          />
+          :
+          <List
+            getNotes={this.getNotes}
+            notes={notes}
+            getNote={this.getNote}
+            deleteNote={this.deleteNote}
+          />
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
