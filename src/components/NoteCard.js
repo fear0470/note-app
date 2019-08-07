@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class NoteCard extends React.Component {
+class NoteCard extends Component {
+
+  renderTags(note) {
+    return note.tags.map((tag, index) =>
+    <span className="note-card-tag" key={index}>
+      {tag.name}
+    </span>
+   );
+  }
+
   render() {
     const { note, getNote, deleteNote } = this.props;
-
 
     return (
       <div className="note-card-container">
@@ -20,8 +28,8 @@ class NoteCard extends React.Component {
           <i className="material-icons">mode_edit</i>
         </span>
       </div>
-      );
+    );
   }
 }
 
-export default NoteCard
+export default NoteCard;

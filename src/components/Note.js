@@ -51,36 +51,56 @@ class Note extends React.Component {
 }
 
 
-
-  render() {
-    const { note } = this.props;
-
-    return (
-      <div className="note-container">
-        <form className="note-form" onSubmit={(e) => this.onSubmit(e)}>
-          <input
-            className="note-title-input"
-            type="text"
-            placeholder="Note Title..."
-            defaultValue={note.title}
-            ref={(input) => this.title = input}
-          />
-         <textarea
-         className="note-textarea"
-         placeholder="Type Here..."
-         defaultValue={note.content}
-         ref={(input) => this.content = input}
-         />
-         <input className="note-button" type="submit" value="Submit" /> 
-        </form>
-        <div className="tag-container">  
-          <div className="tag-button-container">
-            {this.renderTagForm(note)}
-          </div>
-        </div>
+renderTags(note) {
+  if (note.tags) {
+    return note.tags.map((tag, index) =>
+      <div className="tag" key={index}>
+        <span className="delete">
+          <i className="material-icons">delete</i>
+        </span>
+        {tag.name}
       </div>
     );
   }
+}
+
+
+
+render() {
+  const { note, closeTagForm } = this.props;
+
+  return (
+    <div className="note-container">
+      <form
+       className="note-form"
+       onSubmit={(e) => this.onSubmit(e)}
+       onClick={() => closeTagForm()}
+       >
+        <input
+          className="note-title-input"
+          type="text"
+          placeholder="Note Title..."
+          defaultValue={note.title}
+          ref={(input) => this.title = input}
+         />
+        <textarea
+          className="note-textarea"
+          placeholder="Type Here..."
+          defaultValue={note.content}
+          ref={(input) => this.content = input}
+        />
+        <input className="note-button" type="submit" value="Submit" />
+      </form>
+      <div className="tag-container">
+        <div className="tag-button-container">
+          {renderTagForm()}
+        </div>
+        <div className="tag-list-container">
+          {this.renderTags(note)}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Note;
