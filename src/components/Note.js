@@ -37,7 +37,7 @@ class Note extends React.Component {
       );
     } else {
       return (
-        <form onSubmit-{(e) => this.onTagSubmit(e)}>
+        <form onSubmit = {(e) => this.onTagSubmit(e)}>
           <input
             className="tag-input"
             type="text"
@@ -93,7 +93,7 @@ render() {
       </form>
       <div className="tag-container">
         <div className="tag-button-container">
-          {renderTagForm()}
+          {this.renderTagForm()}
         </div>
         <div className="tag-list-container">
           {this.renderTags(note)}
@@ -101,6 +101,7 @@ render() {
       </div>
     </div>
   );
+ }
 }
 
 export default Note;
